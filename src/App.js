@@ -120,6 +120,13 @@ function App() {
         <section>
           {!isLoading && result && <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span> }
 
+
+          {!isLoading && !result && 
+            <p className='leading-loose text-gray-500'>
+              <span className='font-bold text-blue-500'>Didi</span> AI is a <span className='font-bold text-blue-500 underline underline-offset-4'>digital diviner</span> that can be consulted and ansswer questions based on trained AI models from.  
+            </p>
+          }
+
           {/* Result paragraph */}
           <p className='display-paragraph leading-loose'>
 
@@ -132,6 +139,10 @@ function App() {
            }
             
           </p>
+
+          <br></br>
+
+          <a href='openai.com' className='reference text-xs text-gray-400'>Reference: OpenAI.com</a>
 
         </section>
 
