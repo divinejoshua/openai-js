@@ -17,6 +17,20 @@ function App() {
   // create OpenAI configuration object
   const openai = new OpenAIApi(configuration);
 
+
+
+  // Submit form 
+  function submitForm(event){
+
+    //Preventing page refresh
+    event.preventDefault();
+
+    // Call the OpenAI completion Function 
+    completion()
+ }
+
+
+
   // Send request 
   const completion = async () => {
     // 
@@ -31,7 +45,7 @@ function App() {
       console.log(prompt)
       let response = await openai.createCompletion({
         prompt: prompt,
-        model: "text-davinci-001",
+        model: "text-davinci-003",
         temperature: 0,
         max_tokens: 100,
         // top_p: 1,
@@ -75,7 +89,7 @@ function App() {
 
 
       {/* Form input  */}
-        <form className='mt-7'>
+        <form className='mt-7' onSubmit={submitForm}>
           <input 
           type="text" 
           required
@@ -91,7 +105,7 @@ function App() {
           {/* submit button  */}
           <button 
             type='button' 
-            onClick={() => completion()} 
+            onClick={() => submitForm()} 
             disabled={isLoading}
             className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : 'shadow shadow-blue-500/50') + 'none mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 '}>
             Submit
@@ -104,13 +118,21 @@ function App() {
 
         {/* Result section  */}
         <section>
-          <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span>
+          {!isLoading && result && <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span> }
 
           {/* Result paragraph */}
           <p className='display-paragraph leading-loose'>
-            {result}
-            {/* Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. */}
+
+           { isLoading ? 
+              //  Loader 
+              <div className='mx-auto mt-6 loader-spinner rounded-full border border-4 animate-spin'></div> :
+
+              // Results 
+              result
+           }
+            
           </p>
+
         </section>
 
       </header>

@@ -4,3 +4,12 @@
   white-space: pre-line;
   margin-top: 0px;
 }
+
+.loader-spinner{
+  width: 30px;
+  height: 30px;
+  border-left: solid 3px #fcfcfc;
+  border-right: solid 3px #3b82f6;
+  border-top: solid 3px #fcfcfc;
+  border-bottom: solid 3px #3b82f6;
+}
