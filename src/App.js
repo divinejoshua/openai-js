@@ -96,7 +96,7 @@ function App() {
           autoFocus={true}
           placeholder='Ask Didi anything'
           onChange = {e => setprompt(e.target.value)}
-          className='w-full p-2 pt-3 pb-3 pr-5 pl-5 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-0.5 focus:border-100 transition duration-0 hover:duration-150'
+          className='w-full p-2 pt-3 pb-3 pr-5 pl-5 rounded-none border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-0.5 focus:border-100 transition duration-0 hover:duration-150'
           ></input>
 
 
