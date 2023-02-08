@@ -48,10 +48,10 @@ function App() {
         model: "text-davinci-003",
         temperature: 0,
         max_tokens: 100,
-        // top_p: 1,
+        top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
-        stop: ["input:"],
+        stop: ["{}"],
       });
 
       setresult(response.data.choices[0].text)
