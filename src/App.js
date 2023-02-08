@@ -104,7 +104,7 @@ function App() {
 
           {/* submit button  */}
           <button 
-            type='button' 
+            type='submit' 
             onClick={() => submitForm()} 
             disabled={isLoading}
             className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : 'shadow shadow-blue-500/50') + 'none mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 '}>
