@@ -13,7 +13,6 @@ function App() {
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
   });
 
-  console.log(process.env.REACT_APP_OPENAI_API_KEY)
   // create OpenAI configuration object
   const openai = new OpenAIApi(configuration);
 
@@ -24,9 +23,16 @@ function App() {
 
     // Send the request 
     try {
+      console.log(prompt)
       let response = await openai.createCompletion({
-        model: "text-davinci-002",
-        prompt: "Write me a poem",
+        prompt: prompt,
+        model: "text-davinci-001",
+        temperature: 0,
+        max_tokens: 100,
+        // top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+        stop: ["input:"],
       });
 
       setresult(response.data.choices[0].text)
@@ -66,6 +72,7 @@ function App() {
           required
           autoFocus={true}
           placeholder='Ask Didi anything'
+          onChange = {e => setprompt(e.target.value)}
           className='w-full p-2 pt-3 pb-3 pr-5 pl-5 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-0.5 focus:border-100 transition duration-0 hover:duration-150'
           ></input>
 
@@ -74,7 +81,7 @@ function App() {
 
           {/* submit button  */}
           <button 
-            type='submit' 
+            type='button' 
             onClick={() => completion()} 
             className='mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 shadow shadow-blue-500/50'>
             Submit
@@ -82,8 +89,12 @@ function App() {
         </form>
 
         {/* Display paragraph */}
-        <p className='mt-8 leading-loose'>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+        <br></br>
+        <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span>
+        <p className='display-paragraph leading-loose'>
+          {result}
+          {/* Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. */}
         </p>
       </header>
     </div>

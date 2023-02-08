@@ -1,1 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.display-paragraph {
+  white-space: pre-line;
+  margin-top: -50px;
+}
