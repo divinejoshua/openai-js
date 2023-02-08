@@ -83,8 +83,8 @@ function App() {
          Didi AI
         </h1>
 
-        <p className='mt-4 text-xs font-bold text-gray-400 leading-loose'>
-          <span className='text-xs bg-gray-100 pt-1 pb-1 pl-2 pr-2'> Meaning</span> &nbsp;&nbsp;like God or a god. "heroes with divine powers"
+        <p className='mt-4 text-xs text-gray-400 leading-loose'>
+          <span className='text-xs font-bold bg-gray-100 pt-1 pb-1 pl-2 pr-2'> Meaning</span> &nbsp;&nbsp;like God or a god. "heroes with divine powers"
         </p>
 
 
@@ -142,6 +142,7 @@ function App() {
 
           <br></br>
 
+          <p className='reference text-xs text-gray-400'>Knowledge base up to 2021</p>
           <a href='openai.com' className='reference text-xs text-gray-400'>Reference: OpenAI.com</a>
 
         </section>
