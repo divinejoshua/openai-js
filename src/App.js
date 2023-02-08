@@ -5,8 +5,9 @@ import { useState } from 'react';
 
 function App() {
 
-  const [result, setresult] = useState("");
-  const [prompt, setprompt] = useState("");
+  const [result, setresult] = useState("");     //Result from OpenIA
+  const [prompt, setprompt] = useState("");     //Prompt question to OpenAIA
+  const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenAIA
 
   // Create configuration object
   const configuration = new Configuration({
@@ -18,8 +19,12 @@ function App() {
 
   // Send request 
   const completion = async () => {
-    // Check if there is a prompt message 
-    if(!prompt) {return}
+    // 
+    if(!prompt) {return}      //return if there is a prompt message    
+    if(isLoading) {return}    //return if request is already loading
+
+    // Set loading to true
+    setisLoading(true);
 
     // Send the request 
     try {
@@ -43,6 +48,10 @@ function App() {
       console.log(error);
     }
   
+    // If Request is complete 
+    finally{
+      setisLoading(false)
+    }
 
 };
 
@@ -83,7 +92,8 @@ function App() {
           <button 
             type='button' 
             onClick={() => completion()} 
-            className='mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 shadow shadow-blue-500/50'>
+            disabled={isLoading}
+            className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : 'shadow shadow-blue-500/50') + 'none mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 '}>
             Submit
           </button>
         </form>
@@ -91,11 +101,18 @@ function App() {
         {/* Display paragraph */}
 
         <br></br>
-        <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span>
-        <p className='display-paragraph leading-loose'>
-          {result}
-          {/* Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. */}
-        </p>
+
+        {/* Result section  */}
+        <section>
+          <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span>
+
+          {/* Result paragraph */}
+          <p className='display-paragraph leading-loose'>
+            {result}
+            {/* Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. */}
+          </p>
+        </section>
+
       </header>
     </div>
   );
