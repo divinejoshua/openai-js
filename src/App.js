@@ -89,7 +89,7 @@ function App() {
 
 
       {/* Form input  */}
-        <form className='mt-7' onSubmit={submitForm}>
+        <form className='mt-7' onSubmit={submitForm} method="post">
           <textarea 
           type="text" 
           required
