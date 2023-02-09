@@ -42,7 +42,6 @@ function App() {
 
     // Send the request 
     try {
-      console.log(prompt)
       let response = await openai.createCompletion({
         prompt: prompt,
         model: "text-davinci-003",
