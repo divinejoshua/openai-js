@@ -103,8 +103,7 @@ function App() {
 
           {/* submit button  */}
           <button 
-            type='submit' 
-            onClick={() => submitForm()} 
+            type="submit"
             disabled={isLoading}
             className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : 'shadow shadow-blue-500/50') + 'none mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 '}>
             Submit
@@ -127,7 +126,7 @@ function App() {
           }
 
           {/* Result paragraph */}
-          <p className='display-paragraph leading-loose'>
+          <div className='display-paragraph leading-loose'>
 
            { isLoading ? 
               //  Loader 
@@ -137,7 +136,7 @@ function App() {
               result
            }
             
-          </p>
+          </div>
 
           <br></br>
 
