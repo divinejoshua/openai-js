@@ -114,7 +114,7 @@ function App() {
 
         <br></br>
 
-        {/* Result section  */}
+        {/* Result section  */} 
         <section>
           {!isLoading && result && <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span> }
 
