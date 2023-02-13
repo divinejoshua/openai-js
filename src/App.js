@@ -9,6 +9,7 @@ function App() {
   const [prompt, setprompt] = useState("");     //Prompt question to OpenAIA
   const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenAIA
 
+
   // Create configuration object
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -34,7 +35,7 @@ function App() {
   // Send request 
   const completion = async () => {
     // 
-    if(!prompt) {return}      //return if there is a prompt message    
+    if(!prompt) {return}      //return if there is no prompt message    
     if(isLoading) {return}    //return if request is already loading
 
     // Set loading to true
