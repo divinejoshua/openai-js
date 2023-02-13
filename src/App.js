@@ -39,7 +39,7 @@ function App() {
 
     // Set loading to true
     setisLoading(true);
-
+ 
     // Send the request 
     try {
       let response = await openai.createCompletion({
