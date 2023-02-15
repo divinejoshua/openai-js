@@ -123,7 +123,7 @@ function App() {
 
           {!isLoading && !result && 
             <p className='leading-loose text-gray-500'>
-              <span className='font-bold text-blue-500'>Didi</span> AI is a <span className='font-bold text-blue-500 underline underline-offset-4'>digital diviner</span> that can be consulted to answer questions based on trained AI models.  
+              <span className='font-bold text-blue-500'>Didi</span> AI is a <span className='font-bold text-blue-500 underline underline-offset-4'>digital diviner</span> that can be consulted to answer questions based on artificial intelligence.  
             </p>
           }
 
