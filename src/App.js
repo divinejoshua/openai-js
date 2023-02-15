@@ -46,9 +46,10 @@ function App() {
       let response = await openai.createCompletion({
         prompt: prompt,
         model: "text-davinci-003",
+        // instruction: "Tell me a bible verse that relates to this",
         temperature: 0,
         max_tokens: 120,
-        top_p: 1,
+        top_p: 0,
         frequency_penalty: 0,
         presence_penalty: 0,
         stop: ["{}"],
@@ -142,7 +143,7 @@ function App() {
           <br></br>
 
           <p className='reference text-xs text-gray-400'>Knowledge base up to 2021</p>
-          <a href='https://openai.com' target="_blank" className='reference text-xs text-gray-400'>Reference: OpenAI.com</a>
+          <a href='https://openai.com' rel="noreferrer" target="_blank" className='reference text-xs text-gray-400'>Reference: OpenAI.com</a>
 
         </section>
 
