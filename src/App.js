@@ -48,7 +48,7 @@ function App() {
         model: "text-davinci-003",
         // instruction: "Tell me a bible verse that relates to this",
         temperature: 0,
-        max_tokens: 120,
+        max_tokens: 2000,
         top_p: 0,
         frequency_penalty: 0,
         presence_penalty: 0,
