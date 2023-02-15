@@ -42,6 +42,7 @@ function App() {
     setisLoading(true);
  
     // Send the request 
+    console.log(typeof(prompt))
     try {
       let response = await openai.createCompletion({
         prompt: prompt,
