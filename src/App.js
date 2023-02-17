@@ -76,7 +76,7 @@ function App() {
   return (
 
     // Main box 
-    <div className="App mx-auto mt-20 max-w-screen-sm p-7">
+    <div className="App mx-auto mt-20 max-w-screen-sm p-7"> 
       <header className="App-header">
 
         {/* Header  */}
