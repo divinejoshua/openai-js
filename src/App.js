@@ -65,7 +65,7 @@ function App() {
   
     // If Request is complete 
     finally{
-      setisLoading(false)
+      setisLoading(false) 
     }
 
 };
