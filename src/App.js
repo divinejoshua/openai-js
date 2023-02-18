@@ -7,8 +7,9 @@ import Typewriter from 'typewriter-effect';     //Typewriter effect
 function App() {
 
   const [result, setresult] = useState("");     //Result from OpenIA
-  const [prompt, setprompt] = useState("");     //Prompt question to OpenAIA
-  const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenAIA
+  const [prompt, setprompt] = useState("");     //Prompt question to OpenIA
+  const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenIA
+  const [isTypeWriting, setisTypeWriting] = useState(false);     //If the typewriter effect is loading.
 
 
   // Create configuration object
@@ -55,6 +56,7 @@ function App() {
         stop: ["{}"],
       });
 
+      setisTypeWriting(true) //Set the typewriter effect to true
       setresult(response.data.choices[0].text)
     }
 
@@ -135,16 +137,28 @@ function App() {
               <div className='mx-auto mt-6 loader-spinner rounded-full border border-4 animate-spin'></div> :
 
               // Results 
-              result ?
-              <Typewriter
-              onInit={(typewriter) => {
-                typewriter.typeString(result)
-              .start()
-              }}
-              options={{
-                delay: 30,
-              }}
-            /> : ''
+              result && isTypeWriting ?
+
+              //Display results with type writer effect
+                <Typewriter
+                  onInit={(typewriter) => {
+                    typewriter.typeString(result)
+                  .start()
+                  .callFunction(() => {
+                    setisTypeWriting(false)
+                  })
+                  }}
+                  options={{
+                    delay: 15,
+                  }}
+                /> : 
+
+                //Display results without type writer effect
+                result && !isTypeWriting ?
+                  result 
+
+                // If none 
+                : ''
            }
             
           </div>
