@@ -46,7 +46,6 @@ function App() {
       let response = await openai.createCompletion({
         prompt: prompt,
         model: "text-davinci-003",
-        // instruction: "Tell me a bible verse that relates to this",
         temperature: 0,
         max_tokens: 2000,
         top_p: 0,
