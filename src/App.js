@@ -1,7 +1,8 @@
 import './App.css';
 
-import { Configuration, OpenAIApi } from "openai";
 import { useState } from 'react';
+import { Configuration, OpenAIApi } from "openai";    //OpenAI 
+import Typewriter from 'typewriter-effect';     //Typewriter effect
 
 function App() {
 
