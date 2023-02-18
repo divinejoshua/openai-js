@@ -135,6 +135,7 @@ function App() {
               <div className='mx-auto mt-6 loader-spinner rounded-full border border-4 animate-spin'></div> :
 
               // Results 
+              result ?
               <Typewriter
               onInit={(typewriter) => {
                 typewriter.typeString(result)
@@ -143,7 +144,7 @@ function App() {
               options={{
                 delay: 30,
               }}
-            />
+            /> : ''
            }
             
           </div>
