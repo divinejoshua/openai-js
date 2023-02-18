@@ -135,13 +135,22 @@ function App() {
               <div className='mx-auto mt-6 loader-spinner rounded-full border border-4 animate-spin'></div> :
 
               // Results 
-              result
+              <Typewriter
+              onInit={(typewriter) => {
+                typewriter.typeString(result)
+              .start()
+              }}
+              options={{
+                delay: 30,
+              }}
+            />
            }
             
           </div>
 
           <br></br>
 
+       
           <p className='reference text-xs text-gray-400'>Knowledge base up to 2021</p>
           <a href='https://openai.com' rel="noreferrer" target="_blank" className='reference text-xs text-gray-400'>Reference: OpenAI.com</a>
 
