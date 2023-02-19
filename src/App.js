@@ -3,7 +3,7 @@ import './App.css';
 import { useState } from 'react';
 import { Configuration, OpenAIApi } from "openai";    //OpenAI 
 import Typewriter from 'typewriter-effect';     //Typewriter effect
-
+import { useSpeechSynthesis } from 'react-speech-kit';    //React text to speech effect
 
 function App() {
 
@@ -11,12 +11,14 @@ function App() {
   const [prompt, setprompt] = useState("");     //Prompt question to OpenIA
   const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenIA
   const [isTypeWriting, setisTypeWriting] = useState(false);     //If the typewriter effect is loading.
-
+  const { speak, cancel, voices } = useSpeechSynthesis();     //Speech effect
+  const [enableSpeak, setenableSpeak] = useState(true);
 
   // Create configuration object
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
   });
+
 
   // create OpenAI configuration object
   const openai = new OpenAIApi(configuration);
@@ -40,8 +42,9 @@ function App() {
     if(!prompt) {return}      //return if there is no prompt message    
     if(isLoading) {return}    //return if request is already loading
 
-    // Set loading to true
-    setisLoading(true);
+    
+    setisLoading(true);     // Set loading to true
+    setresult("");    // Set result to empty string
  
     // Send the request 
     try {
@@ -67,11 +70,29 @@ function App() {
   
     // If Request is complete 
     finally{
-      setisLoading(false) 
+      setisLoading(false)
+      setenableSpeak(true)
     }
 
+
 };
- 
+
+    // Allow the user to click on the speak button 
+    const allowTextToSpeech = ()=>{
+
+      if(!result){ return }     //Return if no results
+      speak({ text: result, voice: voices[132] })    //Use react speech kit to speak
+      setenableSpeak(false)   // Show option to disable text to speech
+
+    }
+
+    // Disable the speak button and enables the mute button
+    const disableTextToSpeech = ()=>{
+
+      cancel()    //Cancel speaking
+      setenableSpeak(true)    // Show option to enable text to speech
+       
+    }
 
 
 
@@ -112,6 +133,35 @@ function App() {
             className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : 'shadow shadow-blue-500/50') + 'none mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 '}>
             Submit
           </button>
+
+
+
+          {/* Speech tp text  */}
+          {result && 
+            <span>
+
+              {/* If the speak button is enabled  */}
+              {enableSpeak && 
+                <button 
+                  type="button"
+                  onClick={() => allowTextToSpeech()}
+                  className='mt-7 bg-white-500 text-gray-500 font-bold py-2 px-4 float-right'>
+                  &#x1F4E2; Listen 
+                </button>
+              }
+
+              {/* If speak is disallowed  */}
+              {!enableSpeak && 
+                <button 
+                  type="button"
+                  onClick={() => disableTextToSpeech()}
+                  className='mt-7 bg-white-500 text-gray-500 font-bold py-2 px-4 float-right'>
+                  &#128263; Mute 
+                </button>
+              }
+
+              </span>
+          }
         </form>
 
         {/* Display paragraph */}
@@ -162,7 +212,7 @@ function App() {
            }
             
           </div>
-
+        
         
 
           <br></br>
