@@ -81,7 +81,7 @@ function App() {
     const allowTextToSpeech = ()=>{
 
       if(!result){ return }     //Return if no results
-      speak({ text: result, voice: voices[132] })    //Use react speech kit to speak
+      speak({ text: result })    //Use react speech kit to speak
       setenableSpeak(false)   // Show option to disable text to speech
 
     }
