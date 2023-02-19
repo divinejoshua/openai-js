@@ -3,7 +3,7 @@ import './App.css';
 import { useState } from 'react';
 import { Configuration, OpenAIApi } from "openai";    //OpenAI 
 import Typewriter from 'typewriter-effect';     //Typewriter effect
-import Speech from 'react-speech';      //React speech
+
 
 function App() {
 
