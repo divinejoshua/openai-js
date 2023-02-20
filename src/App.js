@@ -108,7 +108,7 @@ function App() {
         </h1>
 
         <p className='mt-4 text-xs text-gray-400 leading-loose'>
-          <span className='text-xs font-bold bg-gray-100 pt-1 pb-1 pl-2 pr-2'> Meaning</span> &nbsp;&nbsp;like God or a god. "heroes with divine powers"
+          <span className='text-xs font-bold bg-gray-100 pt-1 pb-1 pl-2 pr-2'> Meaning</span> &nbsp;&nbsp;like God or a god. "heroes with divine powers. (Malaika)"
         </p>
 
 
