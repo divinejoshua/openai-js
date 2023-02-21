@@ -104,7 +104,7 @@ function App() {
 
         {/* Header  */}
         <h1 className="text-3xl font-bold">
-         Didi AI
+         Didi AI 
         </h1>
 
         <p className='mt-4 text-xs text-gray-400 leading-loose'>
@@ -146,7 +146,7 @@ function App() {
                   type="button"
                   onClick={() => allowTextToSpeech()}
                   className='mt-7 bg-white-500 text-gray-500 font-bold py-2 px-4 float-right'>
-                  &#x1F4E2; Listen 
+                  <i className="fa fa-solid fa-volume-up"></i> Listen 
                 </button>
               }
 
@@ -156,7 +156,7 @@ function App() {
                   type="button"
                   onClick={() => disableTextToSpeech()}
                   className='mt-7 bg-white-500 text-gray-500 font-bold py-2 px-4 float-right'>
-                  &#128263; Mute 
+                  <i className="fa fa-solid fa-volume-mute"></i> Mute 
                 </button>
               }
 
