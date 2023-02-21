@@ -92,7 +92,7 @@ function App() {
       cancel()    //Cancel speaking
       setenableSpeak(true)    // Show option to enable text to speech
        
-    } 
+    }  
 
 
 
