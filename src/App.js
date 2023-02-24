@@ -65,7 +65,7 @@ function App() {
 
     // Check if any errors 
     catch(error){
-      console.log(error);
+      console.log(error); 
     }
   
     // If Request is complete 
