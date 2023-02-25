@@ -78,7 +78,7 @@ function App() {
 };
 
     // Allow the user to click on the speak button 
-    const allowTextToSpeech = ()=>{
+    const allowTextToSpeech = ()=>{ 
 
       if(!result){ return }     //Return if no results
       speak({ text: result })    //Use react speech kit to speak
