@@ -77,7 +77,7 @@ function App() {
 
 };
 
-    // Allow the user to click on the speak button 
+    // Allow the user to click on the speak button  
     const allowTextToSpeech = ()=>{  
 
       if(!result){ return }     //Return if no results
