@@ -48,7 +48,7 @@ function App() {
  
     // Send the request 
     try {
-      let response = await openai.createCompletion({
+      let response = await openai.createCompletion({ 
         prompt: prompt,
         model: "text-davinci-003",
         temperature: 0,
