@@ -35,8 +35,8 @@ function App() {
     completion()
  }
 
-
- let newMessages = []
+  // new messages list 
+  let newMessages = []
 
   // Send request 
   const completion = async () => {
