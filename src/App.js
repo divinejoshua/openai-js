@@ -8,10 +8,11 @@ import { useSpeechSynthesis } from 'react-speech-kit';    //React text to speech
 function App() {
 
   const [result, setresult] = useState("");     //Result from OpenIA
+  const [messageList, setmessageList] = useState([])
   const [prompt, setprompt] = useState("");     //Prompt question to OpenIA
   const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenIA
   const [isTypeWriting, setisTypeWriting] = useState(false);     //If the typewriter effect is loading.
-  const { speak, cancel, voices } = useSpeechSynthesis();     //Speech effect
+  const { speak, cancel } = useSpeechSynthesis();     //Speech effect
   const [enableSpeak, setenableSpeak] = useState(true);
 
   // Create configuration object
@@ -35,6 +36,7 @@ function App() {
  }
 
 
+ let newMessages = []
 
   // Send request 
   const completion = async () => {
@@ -45,12 +47,17 @@ function App() {
     
     setisLoading(true);     // Set loading to true
     setresult("");    // Set result to empty string
+
+    // Set the message. Role as user
+    newMessages = [...messageList]
+    newMessages.push({role: "user", content: prompt})
+    setmessageList(newMessages)
  
     // Send the request 
     try {
+
       let response = await openai.createChatCompletion({ 
         // prompt: prompt,
-        messages: [{role: "user", content: prompt}],
         model: "gpt-3.5-turbo",
         temperature: 0,
         max_tokens: 2000,
@@ -58,10 +65,20 @@ function App() {
         frequency_penalty: 0,
         presence_penalty: 0,
         stop: ["{}"],
+        messages: newMessages,
       });
 
       setisTypeWriting(true) //Set the typewriter effect to true
-      setresult(response.data.choices[0].message.content)
+
+      //set the result to answer
+      let answer = response.data.choices[0].message.content
+      setresult(answer)
+
+      //Add response to the message List as role:assistant
+      //Read the chat-completion OpenAI Docs for more context https://platform.openai.com/docs/api-reference/chat/create
+      newMessages.push({role: "assistant", content: answer})
+      setmessageList(newMessages)
+
     }
 
     // Check if any errors 
