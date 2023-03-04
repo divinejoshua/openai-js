@@ -48,9 +48,10 @@ function App() {
  
     // Send the request 
     try {
-      let response = await openai.createCompletion({ 
-        prompt: prompt,
-        model: "text-davinci-003",
+      let response = await openai.createChatCompletion({ 
+        // prompt: prompt,
+        messages: [{role: "user", content: prompt}],
+        model: "gpt-3.5-turbo",
         temperature: 0,
         max_tokens: 2000,
         top_p: 0,
@@ -60,7 +61,7 @@ function App() {
       });
 
       setisTypeWriting(true) //Set the typewriter effect to true
-      setresult(response.data.choices[0].text)
+      setresult(response.data.choices[0].message.content)
     }
 
     // Check if any errors 
