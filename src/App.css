@@ -17,3 +17,38 @@
 .reference{
   margin-top: 20px;
 }
+
+.App{
+  max-width: 600px;
+}
+
+.nav-header{
+  padding-top: 30px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 600px;
+  z-index: 2;
+  background-color: #fff;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.nav-div{
+  border-bottom:1px solid #efefef;
+ 
+}
+.message-list{
+    opacity: 0;
+    animation: fadeIn 0.2s ease-in-out forwards;
+    }
+    
+    @keyframes fadeIn {
+    from {
+    opacity: 0;
+    }
+    to {
+    opacity: 1;
+    }
+}

@@ -3,7 +3,6 @@ import './App.css';
 import { useState } from 'react';
 import { Configuration, OpenAIApi } from "openai";    //OpenAI 
 import Typewriter from 'typewriter-effect';     //Typewriter effect
-import { useSpeechSynthesis } from 'react-speech-kit';    //React text to speech effect
 
 function App() {
 
@@ -12,8 +11,8 @@ function App() {
   const [prompt, setprompt] = useState("");     //Prompt question to OpenIA
   const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenIA
   const [isTypeWriting, setisTypeWriting] = useState(false);     //If the typewriter effect is loading.
-  const { speak, cancel } = useSpeechSynthesis();     //Speech effect
-  const [enableSpeak, setenableSpeak] = useState(true);
+  const [welcomeText, setwelcomeText] = useState("Didi AI is a digital diviner designed to provide helpful and informative responses to your questions and inquiries with the help of artificial intelligence. ");
+  const [isTypingWelcome, setisTypingWelcome] = useState(true); //If the welcoming test is loading
 
   // Create configuration object
   const configuration = new Configuration({
@@ -52,6 +51,9 @@ function App() {
     newMessages = [...messageList]
     newMessages.push({role: "user", content: prompt})
     setmessageList(newMessages)
+
+    //Set the prompt to nothing. This is done in order to remove the text from the textarea
+    setprompt("")
  
     // Send the request 
     try {
@@ -72,12 +74,14 @@ function App() {
 
       //set the result to answer
       let answer = response.data.choices[0].message.content
-      setresult(answer)
+      setresult(answer.trim())
 
       //Add response to the message List as role:assistant
       //Read the chat-completion OpenAI Docs for more context https://platform.openai.com/docs/api-reference/chat/create
       newMessages.push({role: "assistant", content: answer})
       setmessageList(newMessages)
+
+      
 
     }
 
@@ -89,159 +93,144 @@ function App() {
     // If Request is complete 
     finally{
       setisLoading(false)
-      setenableSpeak(true)
     }
 
 
 };
 
-    // Allow the user to click on the speak button  
-    const allowTextToSpeech = ()=>{  
-
-      if(!result){ return }     //Return if no results
-      speak({ text: result })    //Use react speech kit to speak
-      setenableSpeak(false)   // Show option to disable text to speech
-
-    }
-
-    // Disable the speak button and enables the mute button
-    const disableTextToSpeech = ()=>{
-
-      cancel()    //Cancel speaking
-      setenableSpeak(true)    // Show option to enable text to speech
-       
-    }  
-
-
 
   return (
 
     // Main box 
-    <div className="App mx-auto mt-20 max-w-screen-sm p-7"> 
-      <header className="App-header">
+    <div className="App mx-auto">
 
-        {/* Header  */}
-        <h1 className="text-3xl font-bold">
-         Didi AI 
-        </h1>
-
-        <p className='mt-4 text-xs text-gray-400 leading-loose'>
-          <span className='text-xs font-bold bg-gray-100 pt-1 pb-1 pl-2 pr-2'> Meaning</span> &nbsp;&nbsp;like God or a god. "heroes with divine powers"
-        </p>
-
-
-      {/* Form input  */}
-        <form className='mt-7' onSubmit={submitForm} method="post">
-          <textarea 
-          type="text" 
-          required
-          autoFocus={true}
-          placeholder='Ask Didi anything...'
-          onChange = {e => setprompt(e.target.value)}
-          className='w-full p-2 pt-3 pb-3 pr-5 pl-5 rounded-none border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-0.5 focus:border-100 transition duration-0 hover:duration-150'
-          ></textarea>
-
- 
-          <br></br>
-
-          {/* submit button  */}
-          <button 
-            type="submit"
-            disabled={isLoading}
-            className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : 'shadow shadow-blue-500/50') + 'none mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 '}>
-            Submit
-          </button>
+      {/* Navbar */}
+      <nav className="nav-header font-bold pl-5 pr-5">
+        <div className='nav-div pb-4'>
+          Didi AI     
+          {/* Link to codebase  */}
+          <a href='https://twitter.com/Divine_Er' rel="noreferrer" target="_blank" ><span className='float-right'> <i className="fa fa-brands fa-twitter text-gray-400"></i></span></a>
+        </div>
+      </nav>
 
 
-
-          {/* Speech tp text  */}
-          {result && 
-            <span>
-
-              {/* If the speak button is enabled  */}
-              {enableSpeak && 
-                <button 
-                  type="button"
-                  onClick={() => allowTextToSpeech()}
-                  className='mt-7 bg-white-500 text-gray-500 font-bold py-2 px-4 float-right'>
-                  <i className="fa fa-solid fa-volume-up"></i> Listen 
-                </button>
-              }
-
-              {/* If speak is disallowed  */}
-              {!enableSpeak && 
-                <button 
-                  type="button"
-                  onClick={() => disableTextToSpeech()}
-                  className='mt-7 bg-white-500 text-gray-500 font-bold py-2 px-4 float-right'>
-                  <i className="fa fa-solid fa-volume-mute"></i> Mute 
-                </button>
-              }
-
-              </span>
-          }
-        </form>
 
         {/* Display paragraph */}
 
-        <br></br>
+        <br></br><br></br><br></br><br></br>
+        <div className='main pr-5 pl-5'>
 
-        {/* Result section  */} 
-        <section>
-          {!isLoading && result && <span className='text-xs bg-green-50 pt-1 pb-1 pl-2 pr-2 text-green-500'> Result</span> }
+            {/* About Didi AI  */}         
+              <div className='leading-loose text-sm text-gray-700'>
+                <div className='font-bold text-pink-500'>Didi</div>
+                {isTypingWelcome ?
+                  <Typewriter
+                      onInit={(typewriter) => {
+                        typewriter.typeString(welcomeText)
+                      .start()
+                      .callFunction(() => {
+                        setisTypingWelcome(false)
+                      })
+                      }}
+                      options={{
+                        delay: 10,
+                      }}
+                    /> :
+                    welcomeText
+                  }
+                
+              </div>
+          
 
+            {/* Result paragraph */}
+            <section>
+              <div className='display-paragraph text-sm text-gray-700 leading-loose'>
 
-          {!isLoading && !result && 
-            <p className='leading-loose text-gray-500'>
-              <span className='font-bold text-blue-500'>Didi</span> AI is a <span className='font-bold text-blue-500 underline underline-offset-4'>digital diviner</span> that can be consulted to answer questions based on artificial intelligence.  
-            </p>
-          }
+              {/* Loop through the messages  */}
+              {Array.isArray(messageList) ? messageList.map((post,index) => (
+                  <div key={index} className="message-list">
 
-          {/* Result paragraph */}
-          <div className='display-paragraph leading-loose'>
+                  {/* The role  */}
+                  {
+                    post.role ==='user' ?
+                    <div className='mt-4 text-blue-500 font-bold'>Me</div>
+                    :
+                    <div className='mt-4 text-pink-500 font-bold'>Didi</div>
+                  }
+                  
 
-           { isLoading ? 
-              //  Loader 
-              <div className='mx-auto mt-6 loader-spinner rounded-full border border-4 animate-spin'></div> :
+                  {/* Add type writter effect for new incoming messages  */}
+                  {(index + 1 === messageList.length) && isTypeWriting ?   
+                      <Typewriter
+                      onInit={(typewriter) => {
+                        typewriter.typeString(result)
+                      .start()
+                      .callFunction(() => {
+                        setisTypeWriting(false)
+                      })
+                      }}
+                      options={{
+                        delay: 15,
+                      }}
+                    /> 
+                    :post.content.trim()
+                  }
+                </div>
+                  )) : ""}
 
-              // Results 
-              result && isTypeWriting ?
+                {/* If request is loading  */}
+                { isLoading && 
+                <div>
+                  <div className='mt-4 text-pink-500 font-bold'>Didi</div>
+                  <span className='text-gray-400'>Typing...</span>
+                </div>
+                }
+                
+              </div>
 
-              //Display results with type writer effect
-                <Typewriter
-                  onInit={(typewriter) => {
-                    typewriter.typeString(result)
-                  .start()
-                  .callFunction(() => {
-                    setisTypeWriting(false)
-                  })
-                  }}
-                  options={{
-                    delay: 15,
-                  }}
-                /> : 
-
-                //Display results without type writer effect
-                result && !isTypeWriting ?
-                  result 
-
-                // If none 
-                : ''
-           }
+            </section>
             
-          </div>
-        
-        
 
-          <br></br>
+              <br></br>
 
-       
-          <p className='reference text-xs text-gray-400'>Knowledge base up to 2021</p>
+
+          {/* Form input  */}
+            <form className='mt-7' onSubmit={submitForm} method="post">
+              <textarea 
+              type="text" 
+              required
+              autoFocus={true}
+              placeholder='Ask Didi anything...'
+              onChange = {e => setprompt(e.target.value)}
+              value={prompt}
+              className='w-full p-2 pt-3 pb-3 pr-5 pl-5 rounded border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-0.5 focus:border-100 transition duration-0 hover:duration-150'
+              ></textarea>
+
+    
+              <br></br>
+
+              {/* submit button  */}
+              <button 
+                type="submit"
+                disabled={isLoading}
+                className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : ' bg-blue-500  hover:bg-blue-700') + 'none float-right rounded mt-7 text-white font-bold py-2 px-4 '}>
+                Send <i class="fa-regular fa-paper-plane"></i>
+              </button>
+
+
+            </form>
+
+        </div>
+
+      <br></br><br></br><br></br>
+
+       <div className='pl-5 pr-5'>
+          <p className='reference text-xs text-gray-400'>Knowledge base up to September 2021</p>
           <a href='https://openai.com' rel="noreferrer" target="_blank" className='reference text-xs text-gray-400'>Reference: OpenAI.com</a>
+      </div>
+      <br></br><br></br><br></br>
 
-        </section>
-
-      </header>
+     
     </div>
   );
 }
