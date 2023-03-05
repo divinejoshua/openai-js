@@ -182,7 +182,7 @@ function App() {
                 { isLoading && 
                 <div>
                   <div className='mt-4 text-pink-500 font-bold'>Didi</div>
-                  <span className='text-gray-400'>Typing...</span>
+                  <span className='text-gray-400'>Searching...</span>
                 </div>
                 }
                 
@@ -203,7 +203,7 @@ function App() {
               placeholder='Ask Didi anything...'
               onChange = {e => setprompt(e.target.value)}
               value={prompt}
-              className='w-full p-2 pt-3 pb-3 pr-5 pl-5 rounded border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-0.5 focus:border-100 transition duration-0 hover:duration-150'
+              className='w-full text-gray-700 text-sm p-2 pt-3 pb-3 pr-5 pl-5 rounded border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-0.5 focus:border-100 transition duration-0 hover:duration-150'
               ></textarea>
 
     
@@ -214,7 +214,7 @@ function App() {
                 type="submit"
                 disabled={isLoading}
                 className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : ' bg-blue-500  hover:bg-blue-700') + 'none float-right rounded mt-7 text-white font-bold py-2 px-4 '}>
-                Send <i class="fa-regular fa-paper-plane"></i>
+                Send <i className="fa-regular fa-paper-plane"></i>
               </button>
 
 
