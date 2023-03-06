@@ -213,7 +213,7 @@ function App() {
               <button 
                 type="submit"
                 disabled={isLoading}
-                className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : ' bg-blue-500  hover:bg-blue-700') + 'none float-right rounded mt-7 text-white font-bold py-2 px-4 '}>
+                className={(isLoading ? 'none bg-gray-200 hover:bg-gray-200 text-gray-500 ' : ' bg-blue-500  hover:bg-blue-700') + 'none float-right rounded mt-7 text-sm text-white font-bold py-2 px-4 '}>
                 Send <i className="fa-regular fa-paper-plane"></i>
               </button>
 
