@@ -104,11 +104,11 @@ function App() {
     <div className="App mx-auto">
 
       {/* Navbar */}
-      <nav className="nav-header font-bold pl-5 pr-5">
+      <nav className="nav-header font-bold pl-5 pr-5">   
         <div className='nav-div pb-4'>
           Didi AI     
           {/* Link to twitter account  */}
-          <a href='https://twitter.com/Divine_Er' rel="noreferrer" target="_blank" >
+          <a href='https://twitter.com/Divine_Er' rel="noreferrer" target="_blank" > 
             <span className='float-right'> <i className="fa fa-brands fa-twitter text-gray-400"></i></span>
           </a>
           {/* Link to codebase  */}
