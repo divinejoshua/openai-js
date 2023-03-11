@@ -10,7 +10,7 @@ function App() {
   const [prompt, setprompt] = useState("");     //Prompt question to OpenIA
   const [isLoading, setisLoading] = useState(false);     //Prompt question to OpenIA
   const [isTypeWriting, setisTypeWriting] = useState(false);     //If the typewriter effect is loading.
-  const [welcomeText, setwelcomeText] = useState("Didi AI is a digital diviner designed to provide helpful and informative responses to your questions and inquiries with the help of artificial intelligence. ");
+  const [welcomeText, setwelcomeText] = useState("Didi AI is a digital diviner designed to provide helpful and informative responses to your questions and inquiries with the help of artificial intelligence ");
   const [isTypingWelcome, setisTypingWelcome] = useState(true); //If the welcoming test is loading
 
   // Create configuration object
