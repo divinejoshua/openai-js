@@ -107,8 +107,14 @@ function App() {
       <nav className="nav-header font-bold pl-5 pr-5">
         <div className='nav-div pb-4'>
           Didi AI     
+          {/* Link to twitter account  */}
+          <a href='https://twitter.com/Divine_Er' rel="noreferrer" target="_blank" >
+            <span className='float-right'> <i className="fa fa-brands fa-twitter text-gray-400"></i></span>
+          </a>
           {/* Link to codebase  */}
-          <a href='https://twitter.com/Divine_Er' rel="noreferrer" target="_blank" ><span className='float-right'> <i className="fa fa-brands fa-twitter text-gray-400"></i></span></a>
+          <a href='https://github.com/divinejoshua/openai-js' rel="noreferrer" target="_blank" >
+            <span className='float-right mr-4'> <i className="fa fa-brands fa-github text-gray-400"></i></span>
+          </a>
         </div>
       </nav>
 
