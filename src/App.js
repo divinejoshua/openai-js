@@ -61,7 +61,7 @@ function App() {
         // prompt: prompt,
         model: "gpt-4",
         temperature: 0,
-        max_tokens: 2000,
+        max_tokens: 4000,
         top_p: 0,
         frequency_penalty: 0,
         presence_penalty: 0,
