@@ -58,7 +58,7 @@ function App() {
     try {
 
       let response = await openai.createChatCompletion({ 
-        // prompt: prompt,
+        
         model: "gpt-4",
         temperature: 0,
         max_tokens: 4000,
