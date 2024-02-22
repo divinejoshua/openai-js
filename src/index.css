@@ -13,3 +13,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.markdown {
+  /* Set table styles */
+  table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #dee2e6;
+  }
+
+  /* Table head */
+  th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    font-weight: bold; /* Make header cells bold */
+    background-color: #efefef;
+  }
+
+  /* Table cells */
+  td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6; /* Add vertical border */
+    border-left: 1px solid #dee2e6; /* Add vertical border */
+  }
+ 
+}

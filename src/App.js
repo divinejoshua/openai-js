@@ -2,6 +2,13 @@ import './App.css';
 import { useState } from 'react';
 import { Configuration, OpenAIApi } from "openai";    //OpenAI 
 import Typewriter from 'typewriter-effect';     //Typewriter effect
+import ReactMarkdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
+import remarkGfm from 'remark-gfm'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+
 
 function App() {
 
@@ -12,7 +19,7 @@ function App() {
   const [isTypeWriting, setisTypeWriting] = useState(false);     //If the typewriter effect is loading.
   const [welcomeText, setwelcomeText] = useState("Didi AI is a digital diviner designed to provide helpful and informative responses to your questions and inquiries with the help of artificial intelligence.");
   const [isTypingWelcome, setisTypingWelcome] = useState(true); //If the welcoming test is loading
-
+  const [isFirstCall, setisFirstCall] = useState(true)
   // Create configuration object
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -21,6 +28,13 @@ function App() {
 
   // create OpenAI configuration object
   const openai = new OpenAIApi(configuration);
+
+    // Override react-markdown elements to add class names
+    const P = ({ children }) => <p className="md-post-p">{children}</p>
+    const Li = ({ children }) => <li className="md-post-li">{children}</li>
+    const H4 = ({ children }) => <h4 className="md-post-h4">{children}</h4>
+    const Hr = () => <hr className="md-post-hr" />
+  
 
 
   // Submit form 
@@ -47,10 +61,20 @@ function App() {
     setresult("");    // Set result to empty string
 
     // Set the message. Role as user
+   
     newMessages = [...messageList]
+
+    //If its the first call add the system
+    if (isFirstCall){
+      console.log(isFirstCall)
+      newMessages.push({"role": "system", "content": "You are a helpful assistant called Didi Ai. when displaying code, add the name of the language in front, eg: ```javascript  ...the code ```. Make sure your answers are always in markdown"},)
+    }
     newMessages.push({role: "user", content: prompt})
     setmessageList(newMessages)
 
+    setisFirstCall(false)
+
+  
     //Set the prompt to nothing. This is done in order to remove the text from the textarea
     setprompt("")
  
@@ -65,7 +89,7 @@ function App() {
         top_p: 0,
         frequency_penalty: 0,
         presence_penalty: 0,
-        stop: ["{}"],
+        // stop: ["{}"],
         messages: newMessages,
       });
 
@@ -159,26 +183,56 @@ function App() {
                   {
                     post.role ==='user' ?
                     <div className='mt-4 text-blue-500 font-bold'>Me</div>
-                    :
+                    : post.role ==='assistant' ?
                     <div className='mt-4 text-pink-500 font-bold'>Didi</div>
+                    : null 
                   }
                   
 
                   {/* Add type writter effect for new incoming messages  */}
-                  {(index + 1 === messageList.length) && isTypeWriting ?   
-                      <Typewriter
-                      onInit={(typewriter) => {
-                        typewriter.typeString(result)
-                      .start()
-                      .callFunction(() => {
-                        setisTypeWriting(false)
-                      })
+                  {post.role !== "system" ?
+                    
+                   
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]} // Allows us to have embedded HTML tags in our markdown
+                      className="markdown"
+                      // linkTarget='_blank' // Append target _blank to links so they open in new tab/window
+                      components={{
+                          p: P,
+                          li: Li,
+                          h4: H4,
+                          hr: Hr,
+                          //@ts-ignore
+                          code({ node, inline, className, children, ...props }) {
+                              const match = /language-(\w+)/.exec(className || '')
+                              return !inline && match ? (
+                                <>
+                                    <button>
+                                      code
+                                    </button>
+                                  <SyntaxHighlighter
+                                      //@ts-ignore
+                                      style={xonokai}
+                                      language={match[1]}
+                                      showLineNumbers={true}
+                                      PreTag="div"
+                                      {...props}
+                                  >
+                                    {String(children).replace(/\n$/, '')}
+                                    </SyntaxHighlighter>
+                                  </>
+                              ) : (
+                                  <code className="md-post-code" {...props}> <button></button>
+                                      {children}
+                                  </code>
+                              )
+                          },
                       }}
-                      options={{
-                        delay: 15,
-                      }}
-                    /> 
-                    :post.content.trim()
+                     >
+                      {post.content}
+                    </ReactMarkdown>
+                    : null
+
                   }
                 </div>
                   )) : ""}
