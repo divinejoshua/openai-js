@@ -252,7 +252,6 @@ function App() {
                                   style={xonokai}
                                   language={match ? match[1] : undefined}
                                   PreTag="div"
-                  
                                 >
                                   {String(children).replace(/\n$/, "")}
                                 </SyntaxHighlighter>
