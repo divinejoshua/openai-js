@@ -108,9 +108,6 @@ function App() {
       //Read the chat-completion OpenAI Docs for more context https://platform.openai.com/docs/api-reference/chat/create
       newMessages.push({role: "assistant", content: answer})
       setmessageList(newMessages)
-
-      
-
     }
 
     // Check if any errors 
