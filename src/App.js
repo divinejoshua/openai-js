@@ -192,78 +192,80 @@ function App() {
                     : null 
                   }
                   {/* Add type writter effect for new incoming messages  */}
-                  {post.role !== "system" ?
-                    <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    className="markdown"
-                    components={{
-                      // *********
-                      // * Links *
-                      // *********
-                      a: ({ href, title, children }) => (<Link href={href} target="_blank" underline={"always"}>{children}</Link>),
-              
-                      // ********
-                      // * Text *
-                      // ********
-                      // p: ({ children }) => (<Typography sx={{ mt: 1 }}>{children}</Typography>),
-                      del: ({ children }) => (<Typography sx={{ mt: 1, textDecoration: "line-through" }}>{children}</Typography>),
-                      em: ({ children }) => (<Typography sx={{ mt: 1, fontStyle: "italic" }}>{children}</Typography>),
-                      strong: ({ children }) => (<Typography sx={{ mt: 1, fontWeight: "bold" }}>{children}</Typography>),
-                      b: ({ children }) => (<Typography sx={{ mt: 1, fontWeight: "bold" }}>{children}</Typography>),
-                      h1: ({ children }) => (<h1 className='h1'>{children}</h1>),
-                      h2: ({ children }) => (<h2 className='h2'>{children}</h2>),
-                      h3: ({ children }) => (<h3 className='h3'>{children}</h3>),
-                      h4: ({ children }) => (<h4 className='h4'>{children}</h4>),
-                      h5: ({ children }) => (<h5 className='h5'>{children}</h5>),
-                      h6: ({ children }) => (<h6 className='h6'>{children}</h6>),
-              
-                      // *********
-                      // * Lists *
-                      // *********
-                      ol: ({ children }) => (<List sx={{
-                        listStyleType: "decimal",
-                        mt: 2,
-                        pl: 2,
-                        "& .MuiListItem-root": {
-                          display: "list-item",
-                        },
-                      }}>{children}</List>),
-                      ul: ({ children }) => (<List sx={{
-                        listStyleType: "disc",
-                        mt: 2,
-                        pl: 2,
-                        "& .MuiListItem-root": {
-                          display: "list-item",
-                        },
-                      }}>{children}</List>),
-                      li: ({ children, ...props }) => (
-                        <li className='li'>{children} </li>),
-              
-                      // ********
-                      // * Code *
-                      // ********
-                      //@ts-ignore
-                      code: ({ node, inline, className, children, ...props }) => {
-                        const match = /language-(\w+)/.exec(className || "");
-                        return (
-                          <>
-                            <GlobalStyles styles={{ code: { color: "inherit", background: "transparent" } }} />
-                            <SyntaxHighlighter
-                              style={xonokai}
-                              language={match ? match[1] : undefined}
-                              PreTag="div"
-              
-                            >
-                              {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter>
-                          </>
-                        );
-                      },
-                    }}
-                  >
-                    {post.content.trim()}
-                  </ReactMarkdown>
-                    : null
+                  {post.role !== "system" && post.role === "assistant" ?
+                        <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        className="markdown"
+                        components={{
+                          // *********
+                          // * Links *
+                          // *********
+                          a: ({ href, title, children }) => (<Link href={href} target="_blank" underline={"always"}>{children}</Link>),
+                  
+                          // ********
+                          // * Text *
+                          // ********
+                          // p: ({ children }) => (<Typography sx={{ mt: 1 }}>{children}</Typography>),
+                          del: ({ children }) => (<Typography sx={{ mt: 1, textDecoration: "line-through" }}>{children}</Typography>),
+                          em: ({ children }) => (<Typography sx={{ mt: 1, fontStyle: "italic" }}>{children}</Typography>),
+                          strong: ({ children }) => (<Typography sx={{ mt: 1, fontWeight: "bold" }}>{children}</Typography>),
+                          b: ({ children }) => (<Typography sx={{ mt: 1, fontWeight: "bold" }}>{children}</Typography>),
+                          h1: ({ children }) => (<h1 className='h1'>{children}</h1>),
+                          h2: ({ children }) => (<h2 className='h2'>{children}</h2>),
+                          h3: ({ children }) => (<h3 className='h3'>{children}</h3>),
+                          h4: ({ children }) => (<h4 className='h4'>{children}</h4>),
+                          h5: ({ children }) => (<h5 className='h5'>{children}</h5>),
+                          h6: ({ children }) => (<h6 className='h6'>{children}</h6>),
+                  
+                          // *********
+                          // * Lists *
+                          // *********
+                          ol: ({ children }) => (<List sx={{
+                            listStyleType: "decimal",
+                            mt: 2,
+                            pl: 2,
+                            "& .MuiListItem-root": {
+                              display: "list-item",
+                            },
+                          }}>{children}</List>),
+                          ul: ({ children }) => (<List sx={{
+                            listStyleType: "disc",
+                            mt: 2,
+                            pl: 2,
+                            "& .MuiListItem-root": {
+                              display: "list-item",
+                            },
+                          }}>{children}</List>),
+                          li: ({ children, ...props }) => (
+                            <li className='li'>{children} </li>),
+                  
+                          // ********
+                          // * Code *
+                          // ********
+                          //@ts-ignore
+                          code: ({ node, inline, className, children, ...props }) => {
+                            const match = /language-(\w+)/.exec(className || "");
+                            return (
+                              <>
+                                <GlobalStyles styles={{ code: { color: "inherit", background: "transparent" } }} />
+                                <SyntaxHighlighter
+                                  style={xonokai}
+                                  language={match ? match[1] : undefined}
+                                  PreTag="div"
+                  
+                                >
+                                  {String(children).replace(/\n$/, "")}
+                                </SyntaxHighlighter>
+                              </>
+                            );
+                          },
+                        }}
+                      >
+                        {post.content.trim()}
+                      </ReactMarkdown>
+                  : post.role === "user" ?
+                    post.content.trim()
+                  : null
 
                   }
                 </div>
