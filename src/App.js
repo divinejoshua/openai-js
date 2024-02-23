@@ -3,10 +3,17 @@ import { useState } from 'react';
 import { Configuration, OpenAIApi } from "openai";    //OpenAI 
 import Typewriter from 'typewriter-effect';     //Typewriter effect
 import ReactMarkdown from 'react-markdown'
-import rehypeHighlight from 'rehype-highlight'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+import GlobalStyles from "@mui/material/GlobalStyles";
+
+import {
+  Link,
+  List,
+  Typography,
+} from "@mui/material";
 
 
 
@@ -30,9 +37,9 @@ function App() {
   const openai = new OpenAIApi(configuration);
 
     // Override react-markdown elements to add class names
-    const P = ({ children }) => <p className="md-post-p">{children}</p>
-    const Li = ({ children }) => <li className="md-post-li">{children}</li>
-    const H4 = ({ children }) => <h4 className="md-post-h4">{children}</h4>
+    const P = ({ children }) => <p className="">{children}</p>
+    const Li = ({ children }) => <li className="">{children}</li>
+    const H4 = ({ children }) => <h4 className="">{children}</h4>
     const Hr = () => <hr className="md-post-hr" />
   
 
@@ -66,8 +73,7 @@ function App() {
 
     //If its the first call add the system
     if (isFirstCall){
-      console.log(isFirstCall)
-      newMessages.push({"role": "system", "content": "You are a helpful assistant called Didi Ai. when displaying code, add the name of the language in front, eg: ```javascript  ...the code ```. Make sure your answers are always in markdown"},)
+      newMessages.push({"role": "system", "content": "You are a helpful assistant called Didi Ai. when displaying code, add the name of the language in front, eg: ```javascript  ...the code ```. Make sure your answers are always in markdown. indent the sublist with at least 4 spaces:"},)
     }
     newMessages.push({role: "user", content: prompt})
     setmessageList(newMessages)
@@ -89,7 +95,7 @@ function App() {
         top_p: 0,
         frequency_penalty: 0,
         presence_penalty: 0,
-        // stop: ["{}"],
+        stop: ["{}"],
         messages: newMessages,
       });
 
@@ -130,7 +136,7 @@ function App() {
       {/* Navbar */}
       <nav className="nav-header font-bold pl-5 pr-5">   
         <div className='nav-div pb-4'>
-          Didi AI     
+          Didi AI
           {/* Link to twitter account  */}
           <a href='https://twitter.com/Divine_Er' rel="noreferrer" target="_blank" > 
             <span className='float-right'> <i className="fa fa-brands fa-twitter text-gray-400"></i></span>
@@ -151,7 +157,7 @@ function App() {
 
             {/* About Didi AI  */}         
               <div className='leading-loose text-sm text-gray-700'>
-                <div className='font-bold text-pink-500'>Didi</div>
+                <div className='font-bold text-pink-500' data-testid="my-element">Didi</div>
                 {isTypingWelcome ?
                   <Typewriter
                       onInit={(typewriter) => {
@@ -167,9 +173,7 @@ function App() {
                     /> :
                     welcomeText
                   }
-                
               </div>
-          
 
             {/* Result paragraph */}
             <section>
@@ -187,50 +191,78 @@ function App() {
                     <div className='mt-4 text-pink-500 font-bold'>Didi</div>
                     : null 
                   }
-                  
-
                   {/* Add type writter effect for new incoming messages  */}
                   {post.role !== "system" ?
-                    
-                   
                     <ReactMarkdown
-                      remarkPlugins={[remarkGfm]} // Allows us to have embedded HTML tags in our markdown
-                      className="markdown"
-                      // linkTarget='_blank' // Append target _blank to links so they open in new tab/window
-                      components={{
-                          p: P,
-                          li: Li,
-                          h4: H4,
-                          hr: Hr,
-                          //@ts-ignore
-                          code({ node, inline, className, children, ...props }) {
-                              const match = /language-(\w+)/.exec(className || '')
-                              return !inline && match ? (
-                                <>
-                                    <button>
-                                      code
-                                    </button>
-                                  <SyntaxHighlighter
-                                      //@ts-ignore
-                                      style={xonokai}
-                                      language={match[1]}
-                                      showLineNumbers={true}
-                                      PreTag="div"
-                                      {...props}
-                                  >
-                                    {String(children).replace(/\n$/, '')}
-                                    </SyntaxHighlighter>
-                                  </>
-                              ) : (
-                                  <code className="md-post-code" {...props}> <button></button>
-                                      {children}
-                                  </code>
-                              )
-                          },
-                      }}
-                     >
-                      {post.content}
-                    </ReactMarkdown>
+                    remarkPlugins={[remarkGfm]}
+                    className="markdown"
+                    components={{
+                      // *********
+                      // * Links *
+                      // *********
+                      a: ({ href, title, children }) => (<Link href={href} target="_blank" underline={"always"}>{children}</Link>),
+              
+                      // ********
+                      // * Text *
+                      // ********
+                      // p: ({ children }) => (<Typography sx={{ mt: 1 }}>{children}</Typography>),
+                      del: ({ children }) => (<Typography sx={{ mt: 1, textDecoration: "line-through" }}>{children}</Typography>),
+                      em: ({ children }) => (<Typography sx={{ mt: 1, fontStyle: "italic" }}>{children}</Typography>),
+                      strong: ({ children }) => (<Typography sx={{ mt: 1, fontWeight: "bold" }}>{children}</Typography>),
+                      b: ({ children }) => (<Typography sx={{ mt: 1, fontWeight: "bold" }}>{children}</Typography>),
+                      h1: ({ children }) => (<h1 className='h1'>{children}</h1>),
+                      h2: ({ children }) => (<h2 className='h2'>{children}</h2>),
+                      h3: ({ children }) => (<h3 className='h3'>{children}</h3>),
+                      h4: ({ children }) => (<h4 className='h4'>{children}</h4>),
+                      h5: ({ children }) => (<h5 className='h5'>{children}</h5>),
+                      h6: ({ children }) => (<h6 className='h6'>{children}</h6>),
+              
+                      // *********
+                      // * Lists *
+                      // *********
+                      ol: ({ children }) => (<List sx={{
+                        listStyleType: "decimal",
+                        mt: 2,
+                        pl: 2,
+                        "& .MuiListItem-root": {
+                          display: "list-item",
+                        },
+                      }}>{children}</List>),
+                      ul: ({ children }) => (<List sx={{
+                        listStyleType: "disc",
+                        mt: 2,
+                        pl: 2,
+                        "& .MuiListItem-root": {
+                          display: "list-item",
+                        },
+                      }}>{children}</List>),
+                      li: ({ children, ...props }) => (
+                        <li className='li'>{children} </li>),
+              
+                      // ********
+                      // * Code *
+                      // ********
+                      //@ts-ignore
+                      code: ({ node, inline, className, children, ...props }) => {
+                        const match = /language-(\w+)/.exec(className || "");
+                        return (
+                          <>
+                            <GlobalStyles styles={{ code: { color: "inherit", background: "transparent" } }} />
+                            <SyntaxHighlighter
+                              style={xonokai}
+                              language={match ? match[1] : undefined}
+                              PreTag="div"
+              
+                            >
+                              {String(children).replace(/\n$/, "")}
+                            </SyntaxHighlighter>
+                          </>
+                        );
+                      },
+                    }}
+                  >
+                    {post.content.trim()}
+                  </ReactMarkdown>
                     : null
 
                   }
