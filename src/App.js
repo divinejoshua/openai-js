@@ -73,7 +73,7 @@ function App() {
 
     //If its the first call add the system
     if (isFirstCall){
-      newMessages.push({"role": "system", "content": "You are a helpful assistant called Didi Ai. when displaying code, add the name of the language in front, eg: ```javascript  ...the code ```. Make sure your answers are always in markdown. indent the sublist with at least 4 spaces:"},)
+      newMessages.push({"role": "system", "content": "You are a helpful assistant called Didi Ai. Make sure your answers are always in markdown. indent the sublist with at least 4 spaces:"},)
     }
     newMessages.push({role: "user", content: prompt})
     setmessageList(newMessages)
@@ -241,18 +241,23 @@ function App() {
                           //@ts-ignore
                           code: ({ node, inline, className, children, ...props }) => {
                             const match = /language-(\w+)/.exec(className || "");
-                            return (
-                              <>
-                                <GlobalStyles styles={{ code: { color: "inherit", background: "transparent" } }} />
-                                <SyntaxHighlighter
-                                  style={xonokai}
-                                  language={match ? match[1] : undefined}
-                                  PreTag="div"
-                                >
-                                  {String(children).replace(/\n$/, "")}
-                                </SyntaxHighlighter>
-                              </>
-                            );
+                            const isDoubleBacktick = children.startsWith(`) && children.endsWith(`);
+                            if (match) {
+                              return (
+                                <>
+                                  <GlobalStyles styles={{ code: { color: "inherit", background: "transparent" } }} />
+                                  <SyntaxHighlighter
+                                    style={xonokai}
+                                    language={match ? match[1] : undefined}
+                                    PreTag="div"
+                                  >
+                                    {String(children).replace(/\n$/, "")}
+                                  </SyntaxHighlighter>
+                                </>
+                              );
+                            } else {
+                              return <pre className='px-2 py-1 bg-gray-100 rounded inline'>{String(children).replace(/\n$/, "")}</pre>
+                            }
                           },
                         }}
                       >

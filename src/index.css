@@ -11,6 +11,9 @@ body {
 
 
 .markdown {
+  *{
+    margin-top: 10px;
+  }
   /* Set table styles */
   table {
     width: 100%;
