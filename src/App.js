@@ -241,11 +241,11 @@ function App() {
                           //@ts-ignore
                           code: ({ node, inline, className, children, ...props }) => {
                             const match = /language-(\w+)/.exec(className || "");
-                            const isDoubleBacktick = children.startsWith(`) && children.endsWith(`);
                             if (match) {
                               return (
                                 <>
                                   <GlobalStyles styles={{ code: { color: "inherit", background: "transparent" } }} />
+                                  <p className='text-gray-600'>{match ? match[1] : null}:</p>
                                   <SyntaxHighlighter
                                     style={xonokai}
                                     language={match ? match[1] : undefined}
